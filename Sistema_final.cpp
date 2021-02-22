@@ -14,7 +14,7 @@
 #include "lc.h"
 #include "LDE.h"
 
-Ficha fichaPaciente;
+Ficha fichaPaciente,fichaPaciente2;
 Fila filaPaciente;									
 NoLDE *LDEpaciente, *auxLDE, *auxTriagem, *auxEspecialidade2;
 NoLO *Ordena, *auxLO, *auxLO2;										//Variáveis universais
@@ -63,13 +63,7 @@ int main()
 	rewind(arquivoLC);
 	rewind(arquivoPilha);
 	
-	while(!feof(arquivoLDE))
-	{
-		if(fread(&fichaPaciente,sizeof(fichaPaciente),1,arquivoLDE) != NULL)
-		{
-			inserirNaLDE(LDEpaciente,fichaPaciente,0);
-		}	
-	}
+
 	
 	while(!feof(arquivoLC))
 	{
@@ -86,10 +80,31 @@ int main()
 			empilhar(PilhaRelatorio,fichaPaciente);
 		}
 	}
-	
+		while(!feof(arquivoLDE))
+	{
+		if(fread(&fichaPaciente,sizeof(fichaPaciente),1,arquivoLDE) != NULL)
+		{
+			inserirNaLDE(LDEpaciente,fichaPaciente,0);
+		}	
+	}
 	fclose(arquivoLDE);
 	fclose(arquivoLC);
 	fclose(arquivoPilha);
+	
+	printf("DADOS CLIENTES TESTE \n\n\n\n");
+	NoLDE *auxA = LDEpaciente;
+	while(auxA != NULL){
+		printf("Nome: %s\n",auxA->ficha.Nome);
+		printf("CPF: %ld\n",auxA->ficha.cpf);
+		printf("Hora saida: %s\n",auxA->ficha.triagem.atendimento.horaSaida);
+		printf("Profissional: %s\n",auxA->ficha.triagem.atendimento.profissional);
+		printf("Pressão: %s \n",auxA->ficha.triagem.Pressao);
+		auxA = auxA->prox;
+	}
+	
+	system("pause");
+	system("cls");
+	
 	
 	do
 	{
@@ -324,7 +339,7 @@ void Atendimento()
 				percorreLC = LC;
 				while (auxFila != NULL )
 				{
-					auxTriagem = LDEpaciente;
+					
 					system("cls");
 				    printf(" ------------------------------------------------ ");
 				    printf("\n¦ \t Atendimento >> Triagem \t\t ¦");
@@ -347,14 +362,7 @@ void Atendimento()
 					scanf("%i", &auxFila->ficha.triagem.ClassificacaoRisco);
 					strcpy(auxFila->ficha.triagem.profissionalEnf, percorreLC->funcionarioEnf.NomeEnf);
 					auxFila->ficha.triagem.Conselho = percorreLC->funcionarioEnf.RegistoConselho;
-					while (auxTriagem != NULL)
-					{
-						if (auxFila->ficha.cpf == auxTriagem->ficha.cpf)
-						{
-							auxTriagem->ficha.triagem = auxFila->ficha.triagem;
-						}
-						auxTriagem = auxTriagem->prox;
-					}
+				
 					inserirNaLO(Ordena, auxFila->ficha);
 					auxFila = auxFila->prox;
 					percorreLC = percorreLC->prox;	
@@ -375,7 +383,7 @@ void Atendimento()
 				auxLO = Ordena;
 				while (auxLO != NULL)
 				{
-					auxEspecialidade2 = LDEpaciente;
+					
 					system("cls");
 					controle=1;
 					cin.sync();
@@ -394,14 +402,7 @@ void Atendimento()
                     cin.sync();
                     scanf("%s", &auxLO->ficha.triagem.atendimento.horaSaida);
                     cin.sync();
-					while (auxEspecialidade2 != NULL)
-					{
-						if (auxLO->ficha.cpf == auxEspecialidade2->ficha.cpf)
-						{
-							auxEspecialidade2->ficha.triagem = auxLO->ficha.triagem; 
-						}
-					auxEspecialidade2 = auxEspecialidade2->prox;
-					}
+				
 					auxLO = auxLO->prox;
 				}
 				auxLO2 = Ordena;
@@ -409,7 +410,7 @@ void Atendimento()
 				{
 					if(auxLO2->ficha.triagem.ClassificacaoRisco > 0) 
 						empilhar(PilhaRelatorio, auxLO2->ficha); //A impressão da pilha estará no menu relatórios.
-				auxLO2 = auxLO2->prox;		
+						auxLO2 = auxLO2->prox;		
 				}
 				while(!loVazia(Ordena))
 				{
@@ -437,7 +438,7 @@ void Relatorios()
 	system("cls");
 	int MenuRelatorios,menuBusca;
 	No *PercorrePilha, *PercorrePilha2;
-	NoLDE *percorreLDE;
+	
 	printf(" ------------------------------------------------ ");
 	printf("\n¦ \t\t Relatórios \t\t\t ¦");
 	printf("\n ------------------------------------------------ ");
@@ -710,6 +711,7 @@ void Exportar()
 			arquivoLDE = fopen("arquivoLDE.dat","wb");
 			arquivoLC = fopen("arquivoLC.dat","wb");
 			arquivoPilha = fopen("arquivoPilha.dat","wb");
+			
 			NoLC *gravaLC;
 			No *gravaPilha;
 			NoLDE *gravaLDE;
@@ -739,7 +741,7 @@ void Exportar()
 			fclose(arquivoLC);
 			fclose(arquivoPilha);
 			printf("\n Dados salvo com sucesso!\n ");
-			system("pause");
+				system("pause");
 			
 			/******** RECARREGAR DADOS ********/
 			
@@ -769,6 +771,8 @@ void Exportar()
 					inserirNaLDE(LDEpaciente,fichaPaciente,0);
 				}	
 			}
+		
+		
 			
 			while(!feof(arquivoLC))
 			{
