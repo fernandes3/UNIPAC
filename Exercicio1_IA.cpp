@@ -1,79 +1,106 @@
+#include <stdlib.h>
+#include <Windows.h>
 #include <iostream>
-#include<string.h>
-#include <conio.h>
-#include<stdlib.h>
-#include<time.h>
-void insert_arch(){
-	FILE *archive;
-	archive = fopen("archive.dat","a+b");
-	int degree;
-	char answer;
-	 	do{
-	 		printf("Insert degree in C°: ");
-	 		scanf("%i",&degree);
-	 		fwrite(&degree,sizeof(degree),1,archive);
-	 		printf("Do you wanna insert more?(Y)es/(N)o: ");
-	 		scanf(" %c",&answer);
-	 		
-		 }while(toupper(answer) != 'N');
-		 
-		 fclose(archive);
-	
-	
-}
+#include <time.h>
+#include <math.h>
+#include <conio.c>
+
+#define ANSI_COLOR_RED      "\x1b[31m"
 
 
-
-// FNÇÃO PARA LEITURA DE ARQUIVOS
-int ler_arch(){
-	FILE *archive;
-	archive = fopen("archive.dat","a+b");
-	int contador = 0;
-	rewind(archive);
-	int teste;
-	while(!feof(archive)){
+void controlador(){
+		struct tm *hora_atual;
+	float temp_ambiente;
+	float velocidade_vento;
+	float sensacao_term;
+	time_t segundos;
+	time(&segundos);
+	float temp_ar = 19;
 	
-	if(fread(&teste,sizeof(teste),1,archive)!= NULL){
-		contador++;
+	int on = 0;
+	hora_atual = localtime(&segundos);
+	float temperatura_ar = 19;
+	
+	if(hora_atual->tm_hour > 9 && hora_atual->tm_hour < 22){
+	
+		srand(time(NULL));
+		temp_ambiente = rand() % 40 ;
+		velocidade_vento = rand() % 14;
+		sensacao_term = 25 + (10 * sqrt(velocidade_vento) + 10.45 - velocidade_vento) * (temp_ambiente - 33)/22;
+		printf("SENSAÇAO TÉRMICA [%.1f°C]\n",sensacao_term);
+			
+		if (sensacao_term < 19 && !on){
+			on = 1;
+			printf("LIGANDO");
+			Sleep(1000);
+			printf(".");
+			Sleep(1000);
+			printf(".");
+			Sleep(1000);
+			printf(".");
+			system("cls");
+			textcolor(2);
+			printf("LIGADO!");
+		}else if(sensacao_term < 19 && on){
+			printf("LIGADO!");
+		}else if(sensacao_term >= 19 && sensacao_term <= 25 && on){
+			
+			on = 0;
+			printf("DESLIGANDO");
+			Sleep(1000);
+			printf(".");
+			Sleep(1000);
+			printf(".");
+			Sleep(1000);
+			printf(".");
+			system("cls");
+			textcolor(4);
+			printf("DESLIGADO!");
+			
+		}else if (sensacao_term > 25 && !on){
+			
+			on = 1;
+			printf("LIGANDO");
+			Sleep(1000);
+			printf(".");
+			Sleep(1000);
+			printf(".");
+			Sleep(1000);
+			printf(".");
+			system("cls");
+			textcolor(2);
+			printf("LIGADO!");
+			
+		}else if (sensacao_term > 25 && on){
+			textcolor(2);
+			printf("LIGADO!");
 		}
-	}	
-
-   int i = 0;
-   int vet[contador];
-   rewind(archive);
-   
-while(!feof(archive)){
-	
-	if(fread(&vet,sizeof(vet),1,archive)!= NULL){
-		vet[i++];
-	}
+				
+			
 }
-	int j;
-	fclose(archive);
-	srand(time(NULL));
- 	j = rand() % contador;
-  
-  	return vet[j];
-	
-	
+
 }
 using namespace std;
+
 int main() {
-	
+		
 	setlocale (LC_ALL,"PORTUGUESE");
-	int contador = 0 ;
 	
-	int on_off = 0;
+	controlador();
+
 
 	
-    printf("%i",ler_arch());
-    
-    if (ler_arch() < 20 && on_off == 0){
-    	printf("Ligado!");
-	}
+	
+	
+	
+	
+	
 
-
+	textcolor(7);
 
 	
 	return 0;
 }
+
+
+
