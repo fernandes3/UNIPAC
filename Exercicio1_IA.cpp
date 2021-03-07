@@ -109,14 +109,16 @@ void controlador(){
 				temperatura_ar -= 0.5;
 				}
 			}else{
-				
+				Sleep(1000);
 				printf("TEMPERATURA DO AR CONDICIONADO [%.1f°C]",temperatura_ar);
-				
+				Sleep(1000);
 			}
 			
 		}else if (sensacao_term > 25 && sensacao_term <= 45 && on){
 			textcolor(2);
-			printf("LIGADO!");
+			printf("LIGADO!\n\n");
+			Sleep(1000);
+			system("cls");
 			
 			if(temperatura_ar > 19 ){
 				while(temperatura_ar != 19){
