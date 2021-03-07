@@ -20,8 +20,11 @@ void controlador(){
 	hora_atual = localtime(&segundos);
 	float temperatura_ar = 19;
 	
-	if(hora_atual->tm_hour > 9 && hora_atual->tm_hour < 23){
+	
 		while(1){
+		
+		if(hora_atual->tm_hour > 9 && hora_atual->tm_hour < 18){
+		
 		
 		textcolor(7);
 		srand(time(NULL));
@@ -154,8 +157,24 @@ void controlador(){
 		//Sleep(10000);
 				
 				
+		}else{
+			
+			Sleep(1000);
+			printf("DESLIGANDO O CONTROLADOR");
+			Sleep(1000);
+			printf(".");
+			Sleep(1000);
+			printf(".");
+			Sleep(1000);
+			printf(".");
+			system("cls");
+			textcolor(4);
+			printf("DESLIGADO!");
+			break;
+			
+		}
 	}
-  }
+
 }
 using namespace std;
 

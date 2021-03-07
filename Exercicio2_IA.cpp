@@ -21,8 +21,8 @@ void controlador_rep(){
 	
 	int fluxo_entrada = 2;
 	int fluxo_saida = 4;
-	int volume_rep = 56;
-	bool v_on_off = true;
+	int volume_rep = 50;
+	bool v_on_off = false;
 	while(1){
 	
 	if(v_on_off && volume_rep < 50 || v_on_off && volume_rep > 50 && volume_rep < 100){
