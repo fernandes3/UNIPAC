@@ -11,7 +11,9 @@ void controlador_rep();
 int main() {
 	
 	setlocale (LC_ALL,"PORTUGUESE");
+	
 	controlador_rep();
+	
 	textcolor(7);
 	
 	return 0;
@@ -61,7 +63,7 @@ void controlador_rep(){
 		}
 	}else{
 			textcolor(2);
-			Sleep(2500);
+			Sleep(1000);
 			system("cls");
 			printf("VOLUME DE ÁGUA -> [%d L]\n",volume_rep);
 			volume_rep += fluxo_entrada; 

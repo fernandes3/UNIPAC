@@ -23,7 +23,7 @@ void controlador(){
 	
 		while(1){
 		
-		if(hora_atual->tm_hour > 9 && hora_atual->tm_hour < 18){
+		if(hora_atual->tm_hour > 9 && hora_atual->tm_hour < 21){
 		
 		
 		textcolor(7);
