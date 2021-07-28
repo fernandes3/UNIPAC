@@ -111,7 +111,7 @@ int main(int argc, char** argv) {
 
 	setlocale (LC_ALL,"PORTUGUESE");
 	int value ;
-	int a = 2147483647 ;
+	int a = 999 ;
 	int b = 1002;
 	int c = 27;
 	int d = 120;
